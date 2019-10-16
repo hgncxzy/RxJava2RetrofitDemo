@@ -10,7 +10,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
- * Created by Charles on 2016/3/17.
+ *
  */
 public class ResponseConvertFactory extends Converter.Factory{
 
@@ -18,7 +18,7 @@ public class ResponseConvertFactory extends Converter.Factory{
      * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
-    public static ResponseConvertFactory create() {
+    static ResponseConvertFactory create() {
         return create(new Gson());
     }
 
@@ -26,7 +26,7 @@ public class ResponseConvertFactory extends Converter.Factory{
      * Create an instance using {@code gson} for conversion. Encoding to JSON and
      * decoding from JSON (when no charset is specified by a header) will use UTF-8.
      */
-    public static ResponseConvertFactory create(Gson gson) {
+    private static ResponseConvertFactory create(Gson gson) {
         return new ResponseConvertFactory(gson);
     }
 

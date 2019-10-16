@@ -10,11 +10,11 @@ import retrofit2.http.GET;
 /**
  * 请求接口。
  */
-public interface IAPIService {
+public interface IApiService {
 
     @GET("test/get")
-    Flowable<HttpResult<Object>> getTestData();
+    Flowable<HttpResult<Subject>> getHttpResult();
 
-    @GET("test/get")
-    Flowable<Object> getTestData1();
+//    @GET("test/get")
+//    Flowable<Subject> getSubject();
 }

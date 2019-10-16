@@ -1,10 +1,15 @@
 package com.xzy.rxjava2retrofitdemo.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 接口返回的数据对象
  */
+@SuppressWarnings("unused")
 public class Subject {
+    @SerializedName("name")
     private String name;
+    @SerializedName("age")
     private int age;
 
     public String getName() {
@@ -21,5 +26,13 @@ public class Subject {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Subject{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

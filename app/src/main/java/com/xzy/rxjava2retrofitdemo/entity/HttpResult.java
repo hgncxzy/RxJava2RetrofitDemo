@@ -1,13 +1,28 @@
 package com.xzy.rxjava2retrofitdemo.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 接口返回数据封装。
+ * <p>
+ * 后台接口返回 json 格式为：
+ * {
+ * "msg": "success",
+ * "code": 0,
+ * "data": {
+ * "name": "arthinking",
+ * "age": 24
+ * }
+ * }
  */
 public class HttpResult<T> {
 
+    @SerializedName("msg")
     private String msg;
+    @SerializedName("code")
     private int code;
     //用来模仿Data
+    @SerializedName("data")
     private T subjects;
 
     public String getMsg() {

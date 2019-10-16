@@ -12,7 +12,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 /**
- * Created by Charles on 2016/3/17.
+ * Gson 转换。
  */
 class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;
@@ -34,7 +34,5 @@ class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
             throw new ApiException(httpResult.getCode());
         }
         return gson.fromJson(response, type);
-
-
     }
 }

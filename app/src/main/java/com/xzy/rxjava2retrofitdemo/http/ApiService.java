@@ -5,8 +5,6 @@ import android.annotation.SuppressLint;
 import com.xzy.rxjava2retrofitdemo.entity.HttpResult;
 import com.xzy.rxjava2retrofitdemo.entity.Subject;
 
-import org.reactivestreams.Publisher;
-
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
@@ -16,49 +14,49 @@ import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 
 /**
  * Created by liukun on 16/3/9.
  */
-public class HttpMethods {
-    private static final String TAG = "HttpMethods";
+public class ApiService {
+    private static final String TAG = "ApiService";
     private static final String BASE_URL = "http://yapi.demo.qunar.com/mock/6321/";
     private static final int DEFAULT_TIMEOUT = 5;
-    private IAPIService movieService;
+    private IApiService service;
 
     /**
      * 构造方法私有
      */
-    private HttpMethods() {
+    private ApiService() {
         // 手动创建一个OkHttpClient并设置超时时间
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
-        Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit
+                .Builder()
                 .client(builder.build())
                 // 对http请求结果进行统一的预处理 GosnResponseBodyConvert
-//                .addConverterFactory(ResponseConvertFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ResponseConvertFactory.create())
+//                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .baseUrl(BASE_URL)
                 .build();
-        movieService = retrofit.create(IAPIService.class);
+        service = retrofit.create(IApiService.class);
     }
 
     /**
-     * 在访问 HttpMethods 时创建单例
+     * 在访问 ApiService 时创建单例
      */
     private static class SingletonHolder {
-        private static final HttpMethods INSTANCE = new HttpMethods();
+        private static final ApiService INSTANCE = new ApiService();
     }
 
     /**
      * 获取单例
      *
-     * @return HttpMethods
+     * @return ApiService
      */
-    public static HttpMethods getInstance() {
+    public static ApiService getInstance() {
         return SingletonHolder.INSTANCE;
     }
 
@@ -66,22 +64,10 @@ public class HttpMethods {
      * 用于获取测试接口的数据
      */
     @SuppressLint("CheckResult")
-    public Flowable<Object> getTestData() {
-        return movieService
-                .getTestData()
-                .flatMap((Function<HttpResult<Object>, Publisher<Object>>)
-                       subjectHttpResult -> Flowable.just(subjectHttpResult.getSubjects()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-    }
-
-    /**
-     * 用于获取测试接口的数据
-     */
-    @SuppressLint("CheckResult")
-    public Flowable<Object> getTestData1() {
-        return movieService
-                .getTestData1()
+    public Flowable<Subject> getHttpResult() {
+        return service
+                .getHttpResult()
+                .map(new HttpResultFunc<>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

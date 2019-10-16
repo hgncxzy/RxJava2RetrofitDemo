@@ -29,7 +29,7 @@ class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
         Log.d("Network", "response>>" + response);
         //httpResult 只解析result字段
         HttpResult httpResult = gson.fromJson(response, HttpResult.class);
-        //
+        // code 为 0 的时候，是正确的返回，其余为错误的返回
         if (httpResult.getCode() != 0) {
             throw new ApiException(httpResult.getCode());
         }

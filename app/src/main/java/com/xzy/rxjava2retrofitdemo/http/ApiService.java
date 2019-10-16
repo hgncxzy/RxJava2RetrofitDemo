@@ -8,9 +8,7 @@ import com.xzy.rxjava2retrofitdemo.entity.Subject;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
-import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -67,9 +65,7 @@ public class ApiService {
     public Flowable<Subject> getHttpResult() {
         return service
                 .getHttpResult()
-                .map(new HttpResultFunc<>())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+                .map(new HttpResultFunc<>());
     }
 
     /**

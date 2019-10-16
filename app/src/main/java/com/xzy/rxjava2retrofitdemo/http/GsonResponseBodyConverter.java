@@ -12,7 +12,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 
 /**
- * Gson 转换。
+ *  Gson 转换并包含具体的预处理实现。
  */
 class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     private final Gson gson;

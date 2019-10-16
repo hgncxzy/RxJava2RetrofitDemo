@@ -3,7 +3,7 @@ package com.xzy.rxjava2retrofitdemo.entity;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * 接口返回的数据对象
+ * 接口返回的数据中包含的对象封装
  */
 @SuppressWarnings("unused")
 public class Subject {

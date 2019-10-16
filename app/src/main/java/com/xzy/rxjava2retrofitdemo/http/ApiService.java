@@ -4,12 +4,14 @@ import android.annotation.SuppressLint;
 
 import com.xzy.rxjava2retrofitdemo.entity.HttpResult;
 import com.xzy.rxjava2retrofitdemo.entity.Subject;
+import com.xzy.rxjava2retrofitdemo.interceptor.CommonInterceptor;
 
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Flowable;
 import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
@@ -30,6 +32,12 @@ public class ApiService {
         // 手动创建一个OkHttpClient并设置超时时间
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        //启用Log日志
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(loggingInterceptor);
+        // 添加通用拦截器
+        builder.addInterceptor(new CommonInterceptor());
         Retrofit retrofit = new Retrofit
                 .Builder()
                 .client(builder.build())

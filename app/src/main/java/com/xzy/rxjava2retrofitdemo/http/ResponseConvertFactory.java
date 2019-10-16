@@ -10,7 +10,7 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 /**
- *
+ *对 http 请求结果进行统一的预处理
  */
 public class ResponseConvertFactory extends Converter.Factory{
 

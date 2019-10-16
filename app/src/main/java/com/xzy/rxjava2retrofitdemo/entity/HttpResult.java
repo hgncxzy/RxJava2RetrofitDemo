@@ -3,7 +3,7 @@ package com.xzy.rxjava2retrofitdemo.entity;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * 接口返回数据封装。
+ * 接口返回数据整体封装。
  * <p>
  * 后台接口返回 json 格式为：
  * {

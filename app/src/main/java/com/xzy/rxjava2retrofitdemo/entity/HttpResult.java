@@ -1,5 +1,6 @@
 package com.xzy.rxjava2retrofitdemo.entity;
 
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -15,6 +16,7 @@ import com.google.gson.annotations.SerializedName;
  * }
  * }
  */
+@SuppressWarnings("unused")
 public class HttpResult<T> {
 
     @SerializedName("msg")

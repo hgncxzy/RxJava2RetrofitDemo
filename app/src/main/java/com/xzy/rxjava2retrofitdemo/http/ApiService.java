@@ -1,6 +1,7 @@
 package com.xzy.rxjava2retrofitdemo.http;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import com.xzy.rxjava2retrofitdemo.entity.HttpResult;
 import com.xzy.rxjava2retrofitdemo.entity.Subject;
@@ -17,7 +18,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 
 /**
- * Created by liukun on 16/3/9.
+ * ApiService
  */
 public class ApiService {
     private static final String TAG = "ApiService";
@@ -85,6 +86,7 @@ public class ApiService {
         @Override
         public T apply(HttpResult<T> tHttpResult) {
             if (tHttpResult == null) {
+                Log.e(TAG, "tHttpResult is null");
                 throw new ApiException(100);
             }
             return tHttpResult.getSubjects();

@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.queen.rxjavaretrofitdemo.R;
 import com.xzy.rxjava2retrofitdemo.http.ApiService;
 
+import org.reactivestreams.Publisher;
+
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -58,21 +60,23 @@ public class MainActivity extends Activity {
      * 进行网络请求
      */
     private void getHttpResult() {
-        compositeDisposable.add(Flowable
-                .just(1)
-                .doOnNext(o -> dialog.show())
-                .delay(1, TimeUnit.SECONDS)
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(Schedulers.io())
-                .flatMap(o -> ApiService.getInstance().getHttpResult())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(subject -> resultTV.setText(subject.toString()))
-                .doOnError(throwable -> {
-                    Toast.makeText(MainActivity.this, "结果异常", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, Objects.requireNonNull(throwable.getMessage()));
-                })
-                .doOnTerminate(() -> dialog.dismiss())
-                .subscribe(o -> {
-                }, throwable -> Log.e(TAG, throwable.toString())));
+        compositeDisposable
+                .add(Flowable
+                        .just(1)
+                        .doOnNext(o -> dialog.show())
+                        .delay(1, TimeUnit.SECONDS)
+                        .subscribeOn(AndroidSchedulers.mainThread())
+                        .observeOn(Schedulers.io())
+                        .flatMap(o -> ApiService.getInstance().getHttpResult())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnNext(subject -> resultTV.setText(subject.toString()))
+                        .doOnError(throwable -> {
+                            Toast.makeText(MainActivity.this, "结果异常", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, Objects.requireNonNull(throwable.getMessage()));
+                        })
+                        .doOnTerminate(() -> dialog.dismiss())
+                        .retry(3)
+                        .subscribe(o -> {
+                        }, throwable -> Log.e(TAG, throwable.toString())));
     }
 }
